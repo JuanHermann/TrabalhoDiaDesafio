@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "365809786735",
+    "firebase_url": "https://trabalhodiadesafio.firebaseio.com",
+    "project_id": "trabalhodiadesafio",
+    "storage_bucket": "trabalhodiadesafio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365809786735:android:81014dfdc3608944",
+        "android_client_info": {
+          "package_name": "com.example.juan.trabalhodiadesafio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "365809786735-30ijdqkdq5en1559ctbr1tn18ij8q7f0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIilVt6i1NApOJx1C6N9jyc1Nb4aCcadI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

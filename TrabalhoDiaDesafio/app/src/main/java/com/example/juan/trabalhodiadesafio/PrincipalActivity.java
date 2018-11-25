@@ -1,12 +1,16 @@
 package com.example.juan.trabalhodiadesafio;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,90 +29,51 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class PrincipalActivity extends AppCompatActivity   {
 
-    private SignInButton btnGoogle;
-    private TextView tvStatus;
 
+    private static final String PREF_NAME = "pref";
+    private Integer idUsuario = -1;
 
-    private GoogleSignInClient mGoogleSignInClient;
-    private Integer RC_SIGN_IN = 9001;
-
-    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        tvStatus = (TextView) findViewById(R.id.tvStatus);
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        btnGoogle = (SignInButton) findViewById(R.id.btnGoogle);
-        btnGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-            }
-        });
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        mAuth = FirebaseAuth.getInstance();
+        pegarIdUsuario();
+        verificaUsuarioLogado();
     }
 
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+    private void pegarIdUsuario() {
+        SharedPreferences settings = this.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        idUsuario = settings.getInt("idusuario",-1);
     }
 
-    public void btnGoogleOnClick(View view) {
-        signIn();
-    }
+    private void verificaUsuarioLogado() {
+        if(idUsuario == -1){
+            Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+            Toast.makeText(getApplicationContext(), "Usuario Não esta logado "+idUsuario, Toast.LENGTH_LONG).show();
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        }else {
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSingInResult(result);
+            Toast.makeText(getApplicationContext(), "Usuario  logado " + idUsuario, Toast.LENGTH_LONG).show();
         }
     }
 
-    private void handleSingInResult(GoogleSignInResult result) {
-        if(result.isSuccess()){
-            GoogleSignInAccount acct = result.getSignInAccount();
-            tvStatus.setText("Bem vindo " + acct.getDisplayName());
-        }
-    }
-
-
-    private void signOut() {
-        // Firebase sign out
-        mAuth.signOut();
-
-        // Google sign out
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                    }
-                });
-    }
 
     public void btnLogoutOnClick(View view) {
-        signOut();
-        tvStatus.setText("adeus"+);
+        SharedPreferences settings = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("idusuario", -1);
+        editor.commit();
+
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+        pegarIdUsuario();
+        Toast.makeText(getApplicationContext(), "Usuario Não esta logado "+idUsuario, Toast.LENGTH_LONG).show();
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
+
 }

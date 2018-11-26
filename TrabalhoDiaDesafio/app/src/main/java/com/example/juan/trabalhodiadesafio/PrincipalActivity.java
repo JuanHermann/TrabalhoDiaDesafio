@@ -1,44 +1,26 @@
 package com.example.juan.trabalhodiadesafio;
 
-import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Response;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PrincipalActivity extends AppCompatActivity   {
@@ -46,48 +28,21 @@ public class PrincipalActivity extends AppCompatActivity   {
 
     private static final String PREF_NAME = "pref";
     private Integer idUsuario = -1;
-    JSONArray ja;
-    int i;
+    List<JSONObject> lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        System.out.println("TESTE ===== TESTE <<<<<<<<<");
         pegarIdUsuario();
         verificaUsuarioLogado();
 
+        String urlUser = "http://192.168.2.14:8081/api/infousuario/2"; //mudar id user
+        String urlAll = "http://192.168.2.14:8081/api/infousuarios"; //IP!!
 
-        //Inicio chamar servidor
-        String url = "http://192.168.2.14:8081/api/infousuarios"; //mudar localhost para o IP!!
+        lista = ListarUsuarios(urlAll);
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonArrayRequest objectRequest = new JsonArrayRequest(
-                Request.Method.GET, url, null,
-                new com.android.volley.Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.e("rest response", response.toString()); //response é o conteudo
-                        try {
-                            System.out.println(response.getJSONObject(0));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("rest response", error.toString());
-                    }
-                }
-        );
-
-        requestQueue.add(objectRequest);
-        //Final
-        System.out.println("FINAL ==== FINAL");
     }
 
     private void pegarIdUsuario() {
@@ -109,7 +64,6 @@ public class PrincipalActivity extends AppCompatActivity   {
         }
     }
 
-
     public void btnLogoutOnClick(View view) {
         SharedPreferences settings = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
@@ -123,5 +77,49 @@ public class PrincipalActivity extends AppCompatActivity   {
     }
 
 
+    public List<JSONObject> ListarUsuarios(String url){
+        //Inicio chamar servidor
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JsonArrayRequest objectRequest = new JsonArrayRequest(
+                Request.Method.GET, url, null,
+                new com.android.volley.Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("rest response", response.toString()); //response é o conteudo
+                        int i = 0;
+                        lista = new ArrayList<>(response.length());
+                        while (i < response.length()){
+                            try {
+                                lista.add(i, response.getJSONObject(i));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            i++;
+                        }
+
+                        try {
+
+                            for (int x = 0; x < lista.size(); x++){
+                                System.out.println("===============");
+                                System.out.println(lista.get(x).toString());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("rest response", error.toString());
+                    }
+                }
+        );
+
+        requestQueue.add(objectRequest);
+        return lista;
+    }
 
 }

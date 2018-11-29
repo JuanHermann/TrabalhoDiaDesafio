@@ -1,18 +1,24 @@
 package com.example.juan.trabalhodiadesafio;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,32 +31,35 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText e1,e2;
-
+    private static final String PREF_NAME = "pref";
     private SignInButton btnGoogle;
-
-    private FirebaseAuth auth;
+    private GoogleSignInAccount acct;
     private GoogleSignInClient mGoogleSignInClient;
-    private Integer RC_SIGN_IN = 101;
+    private Integer RC_SIGN_IN = 9001;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        auth = FirebaseAuth.getInstance();
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+        btnGoogle = (SignInButton) findViewById(R.id.btnGoogle);
+        btnGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+            }
+        });
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-//        btnGoogle = (SignInButton) findViewById(R.id.btnGoogle);
+        mAuth = FirebaseAuth.getInstance();
+
     }
-
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -62,40 +71,29 @@ public class LoginActivity extends AppCompatActivity {
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                // ...
-            }
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSingInResult(result);
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void handleSingInResult(GoogleSignInResult result) {
+        if(result.isSuccess()){
+            acct = result.getSignInAccount();
 
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = auth.getCurrentUser();
-                            startActivity(new Intent(getApplicationContext(),PrincipalActivity.class));
-                            finish();
-                            Toast.makeText(getApplicationContext(),"Usuario logado com sucesso!",Toast.LENGTH_LONG).show();
-                        } else {
+            SharedPreferences settings = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("idusuario", 3);
+            editor.commit();
 
-                            Toast.makeText(getApplicationContext(),"Não foi possivel logar!",Toast.LENGTH_LONG).show();
-                        }
+            startActivity(new Intent(this, LoginActivity.class));
+            Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("acct",acct);
+            startActivity(intent);
+            finish();
 
-                    }
-                });
+        }
     }
-
-
 
 
 }

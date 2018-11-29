@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -38,6 +43,10 @@ public class LoginActivity extends AppCompatActivity {
     private Integer RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
 
+
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +66,33 @@ public class LoginActivity extends AppCompatActivity {
         });
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+
+
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
+
+
+        callbackManager = CallbackManager.Factory.create();
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+
         mAuth = FirebaseAuth.getInstance();
+        //verificarUsuarioLogado();
 
     }
     private void signIn() {
@@ -65,6 +100,12 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    /*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -74,23 +115,43 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSingInResult(result);
         }
-    }
+    }*/
 
     private void handleSingInResult(GoogleSignInResult result) {
+        System.out.println("ABCDE");
         if(result.isSuccess()){
+            System.out.println("ABCDE");
             acct = result.getSignInAccount();
-
+            System.out.println(acct.getDisplayName());
             SharedPreferences settings = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
             editor.putInt("idusuario", 3);
             editor.commit();
 
-            startActivity(new Intent(this, LoginActivity.class));
-            Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+            Intent intent = new Intent(this, PrincipalActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("acct",acct);
+            //intent.putExtra("acct",acct);
             startActivity(intent);
             finish();
+
+        }
+    }
+    private void verificarUsuarioLogado(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // Name, email address, and profile photo Url
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+
+            // Check if user's email is verified
+            boolean emailVerified = user.isEmailVerified();
+
+            // The user's ID, unique to the Firebase project. Do NOT use this value to
+            // authenticate with your backend server, if you have one. Use
+            // FirebaseUser.getIdToken() instead.
+            String uid = user.getUid();
+            startActivity(new Intent(this, PrincipalActivity.class));
 
         }
     }

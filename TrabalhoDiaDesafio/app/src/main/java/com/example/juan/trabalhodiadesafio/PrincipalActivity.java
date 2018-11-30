@@ -3,9 +3,13 @@ package com.example.juan.trabalhodiadesafio;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -26,8 +30,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-public class PrincipalActivity extends AppCompatActivity   {
+
+public class PrincipalActivity extends AppCompatActivity {
 
 
     private static final String PREF_NAME = "pref";
@@ -43,19 +50,19 @@ public class PrincipalActivity extends AppCompatActivity   {
     }
 
     private void pegarIdUsuario() {
-        SharedPreferences settings = this.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
-        idUsuario = settings.getInt("idusuario",-1);
+        SharedPreferences settings = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        idUsuario = settings.getInt("idusuario", -1);
     }
 
     private void verificaUsuarioLogado() {
-        if(idUsuario == -1){
+        if (idUsuario == -1) {
             Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
-            Toast.makeText(getApplicationContext(), "Usuario Não esta logado "+idUsuario, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Usuario Não esta logado " + idUsuario, Toast.LENGTH_LONG).show();
 
-        }else {
+        } else {
 
             Toast.makeText(getApplicationContext(), "Usuario  logado " + idUsuario, Toast.LENGTH_LONG).show();
         }
@@ -71,9 +78,8 @@ public class PrincipalActivity extends AppCompatActivity   {
         startActivity(new Intent(this, LoginActivity.class));
         finish();
         pegarIdUsuario();
-        Toast.makeText(getApplicationContext(), "Usuario Não esta logado "+idUsuario, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Usuario Não esta logado " + idUsuario, Toast.LENGTH_LONG).show();
     }
-
 
 
 }

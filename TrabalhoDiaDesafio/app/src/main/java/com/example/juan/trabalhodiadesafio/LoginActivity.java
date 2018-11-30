@@ -13,9 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -51,15 +56,14 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email");
-        //loginButton.setPublishPermissions(Arrays.asList("email","public_profile","user_friends"));
+        loginButton.setReadPermissions("public_profile", "email");
 
 
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
+                executeGraphRequest(loginResult.getAccessToken().getUserId());
             }
 
             @Override
@@ -79,12 +83,17 @@ public class LoginActivity extends AppCompatActivity {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+
+                        login();
+
                         Toast.makeText(getApplicationContext(), "Usuario Logado com Sucesso ", Toast.LENGTH_LONG).show();
                     }
 
+
+
                     @Override
                     public void onCancel() {
-                        Toast.makeText(getApplicationContext(), "Usuario Não deu  ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Não foi Possivel conectar", Toast.LENGTH_LONG).show();
 
                     }
 
@@ -103,5 +112,28 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    public void login() {
+        Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+        startActivity(intent);
+    }
+
+    private void executeGraphRequest(final String userId){
+        Toast.makeText(getApplicationContext(), "dados ", Toast.LENGTH_LONG).show();
+        GraphRequest request =new GraphRequest(AccessToken.getCurrentAccessToken(), userId, null, HttpMethod.GET, new GraphRequest.Callback() {
+            @Override
+            public void onCompleted(GraphResponse response) {
+                Log.i("FACEBOOK", response.getJSONObject().toString());
+                Log.i("FACEBOOK", Profile.getCurrentProfile().toString());
+            }
+        });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id, name, email, gender, birthday");
+        request.setParameters(parameters);
+        request.executeAsync();
+
+    }
+
 
 }

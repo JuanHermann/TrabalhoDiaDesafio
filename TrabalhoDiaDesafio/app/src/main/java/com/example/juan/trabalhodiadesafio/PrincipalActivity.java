@@ -16,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -45,8 +47,13 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        pegarIdUsuario();
-        verificaUsuarioLogado();
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        if(isLoggedIn){
+            Toast.makeText(getApplicationContext(), "Usuario Logado", Toast.LENGTH_LONG).show();
+        }else{
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 
     private void pegarIdUsuario() {
@@ -70,15 +77,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
 
     public void btnLogoutOnClick(View view) {
-        SharedPreferences settings = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("idusuario", -1);
-        editor.commit();
-
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
-        pegarIdUsuario();
-        Toast.makeText(getApplicationContext(), "Usuario Não esta logado " + idUsuario, Toast.LENGTH_LONG).show();
+        LoginManager.getInstance().logOut();
     }
 
 

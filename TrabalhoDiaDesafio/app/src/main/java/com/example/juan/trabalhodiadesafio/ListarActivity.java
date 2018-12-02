@@ -21,7 +21,7 @@ import java.util.List;
 public class ListarActivity extends AppCompatActivity {
 
     private ListView lvRegistros;
-    List<JSONObject> lista;
+    private List<JSONObject> lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class ListarActivity extends AppCompatActivity {
         lvRegistros = (ListView) findViewById(R.id.lvRegistros);
 
         String urlUser = "http://192.168.2.14:8081/api/infousuario/2"; //mudar id user
-        String urlAll = "http://172.30.14.191:8081/api/infousuarios"; //IP!!
+        String urlAll = "http://192.168.2.14:8081/api/infousuarios"; //IP!!
 
         ListarUsuarios(urlAll);
 
@@ -81,7 +81,7 @@ public class ListarActivity extends AppCompatActivity {
 
     public void printaTudo(){
         for (int x = 0; x < lista.size(); x++){
-            System.out.println("=================================");
+            System.out.println("=== // === // ===");
             System.out.println(lista.get(x).toString());
             try {
                 System.out.println(lista.get(x).getString("nome"));

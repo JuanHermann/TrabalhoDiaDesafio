@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 executeGraphRequest(loginResult.getAccessToken().getUserId());
+
             }
 
             @Override
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
 
                         login();
-
+                        System.out.println("TESTE"+loginResult.getAccessToken().getUserId().toString());
                         Toast.makeText(getApplicationContext(), "Usuario Logado com Sucesso ", Toast.LENGTH_LONG).show();
                     }
 
@@ -127,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i("FACEBOOK", Profile.getCurrentProfile().toString());
             }
         });
+
 
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id, name, email, gender, birthday");

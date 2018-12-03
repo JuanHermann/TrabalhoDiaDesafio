@@ -47,13 +47,7 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-        if(isLoggedIn){
-            Toast.makeText(getApplicationContext(), "Usuario Logado", Toast.LENGTH_LONG).show();
-        }else{
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+        verificaUsuarioLogado();
     }
 
     private void pegarIdUsuario() {
@@ -62,16 +56,13 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     private void verificaUsuarioLogado() {
-        if (idUsuario == -1) {
-            Intent intent = new Intent(PrincipalActivity.this, LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        if(isLoggedIn){
+            Toast.makeText(getApplicationContext(), "Usuario Logado", Toast.LENGTH_LONG).show();
+        }else{
             Toast.makeText(getApplicationContext(), "Usuario Não esta logado " + idUsuario, Toast.LENGTH_LONG).show();
-
-        } else {
-
-            Toast.makeText(getApplicationContext(), "Usuario  logado " + idUsuario, Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, LoginActivity.class));
         }
     }
 

@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -32,6 +30,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -42,12 +53,14 @@ public class PrincipalActivity extends AppCompatActivity {
     private static final String PREF_NAME = "pref";
     private Integer idUsuario = -1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        verificaUsuarioLogado();
+        //verificaUsuarioLogado();
+
     }
 
     private void pegarIdUsuario() {
@@ -66,11 +79,13 @@ public class PrincipalActivity extends AppCompatActivity {
         }
     }
 
-
     public void btnLogoutOnClick(View view) {
         LoginManager.getInstance().logOut();
         startActivity(new Intent(this, LoginActivity.class));
     }
 
+    public void btnLista(View view) {
+        startActivity(new Intent(this, ListarActivity.class));
+    }
 
 }

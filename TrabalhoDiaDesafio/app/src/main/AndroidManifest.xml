@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".ListarActivity"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -39,6 +40,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        
 
     </application>
 

@@ -69,6 +69,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void btnLogoutOnClick(View view) {
         LoginManager.getInstance().logOut();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
 

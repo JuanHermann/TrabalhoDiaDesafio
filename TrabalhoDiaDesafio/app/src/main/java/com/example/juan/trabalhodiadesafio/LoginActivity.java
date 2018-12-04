@@ -1,10 +1,12 @@
 package com.example.juan.trabalhodiadesafio;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    private LoginResult resultadoLogin;
     private TextView txtDisplay;
 
     @Override
@@ -55,54 +58,27 @@ public class LoginActivity extends AppCompatActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("public_profile", "email");
-
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                executeGraphRequest(loginResult.getAccessToken().getUserId());
-
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-
-        callbackManager = CallbackManager.Factory.create();
-
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        executeGraphRequest(loginResult.getAccessToken().getUserId());
 
-                        login();
-                        System.out.println("TESTE"+loginResult.getAccessToken().getUserId().toString());
-                        Toast.makeText(getApplicationContext(), "Usuario Logado com Sucesso ", Toast.LENGTH_LONG).show();
+                        //login();
+                        //Toast.makeText(getApplicationContext(), "Usuario Logado com Sucesso ", Toast.LENGTH_LONG).show();
                     }
-
 
 
                     @Override
                     public void onCancel() {
-                        Toast.makeText(getApplicationContext(), "Não foi Possivel conectar", Toast.LENGTH_LONG).show();
-
+                        alertaCancel();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
+                        alertaErro();
                         System.out.println(exception.toString());
-                        Toast.makeText(getApplicationContext(), "Errrrrrrrrrrrrrrro ", Toast.LENGTH_LONG).show();
-                        // App code
+
                     }
                 });
 
@@ -119,9 +95,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void executeGraphRequest(final String userId){
+    private void executeGraphRequest(final String userId) {
         Toast.makeText(getApplicationContext(), "dados ", Toast.LENGTH_LONG).show();
-        GraphRequest request =new GraphRequest(AccessToken.getCurrentAccessToken(), userId, null, HttpMethod.GET, new GraphRequest.Callback() {
+        GraphRequest request = new GraphRequest(AccessToken.getCurrentAccessToken(), userId, null, HttpMethod.GET, new GraphRequest.Callback() {
             @Override
             public void onCompleted(GraphResponse response) {
                 Log.i("FACEBOOK", response.getJSONObject().toString());
@@ -135,6 +111,42 @@ public class LoginActivity extends AppCompatActivity {
         request.setParameters(parameters);
         request.executeAsync();
 
+        Log.i("FACEBOOK", String.valueOf(parameters.getBundle("name")));
+
+    }
+
+    private void alertaErro() {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle("Erro");
+        alerta.setMessage("Não foi possível realizar o login");
+        alerta.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alerta.show();
+    }
+
+    private void alertaCancel() {
+        Toast.makeText(this, "Login com o Facebook Cancelado", Toast.LENGTH_SHORT).show();
+    }
+
+    private void alertaSucesso(LoginResult loginResult) {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle("Sucesso");
+        alerta.setMessage("Login Realizado com Sucesso");
+        alerta.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alerta.show();
     }
 
 

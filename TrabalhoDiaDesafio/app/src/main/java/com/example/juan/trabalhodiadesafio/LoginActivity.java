@@ -108,25 +108,28 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCompleted(GraphResponse response) {
                 Log.i("FACEBOOK", response.getJSONObject().toString());
-                //dados = response.getJSONObject().get;
+                dados = response.getJSONObject();
                 Log.i("FACEBOOK", Profile.getCurrentProfile().toString());
             }
         });
 
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id, name, email, gender, birthday");
+        request.setParameters(parameters);
+        request.executeAsync();
 
-
-        //mostrar();
+        mostrar();
     }
 
     private void mostrar() {
 
             System.out.println("=== // === // ===");
             System.out.println(dados.toString());
-            try {
-                System.out.println(dados.getString("name"));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                System.out.println(dados.getString("name"));
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
 
     }
 

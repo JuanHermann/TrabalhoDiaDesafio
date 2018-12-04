@@ -41,6 +41,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        dados = new JSONObject();
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -105,17 +108,25 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCompleted(GraphResponse response) {
                 Log.i("FACEBOOK", response.getJSONObject().toString());
-                dados = response.getJSONObject();
+                //dados = response.getJSONObject().get;
                 Log.i("FACEBOOK", Profile.getCurrentProfile().toString());
             }
         });
 
 
-        try {
-            Log.i("FACEBOOK", String.valueOf(dados.getInt("id")));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        //mostrar();
+    }
+
+    private void mostrar() {
+
+            System.out.println("=== // === // ===");
+            System.out.println(dados.toString());
+            try {
+                System.out.println(dados.getString("name"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
     }
 

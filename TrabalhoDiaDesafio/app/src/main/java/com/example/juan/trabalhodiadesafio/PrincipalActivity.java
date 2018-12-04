@@ -11,13 +11,6 @@ import android.widget.Toast;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-
-
 
 public class PrincipalActivity extends AppCompatActivity {
 
@@ -43,6 +36,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private void verificaUsuarioLogado() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
         if(isLoggedIn){
             Toast.makeText(getApplicationContext(), "Usuario Logado", Toast.LENGTH_LONG).show();
         }else{

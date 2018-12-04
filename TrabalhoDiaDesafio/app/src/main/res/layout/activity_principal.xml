@@ -16,7 +16,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista"
+        android:text="Listar Usuarios"
         android:onClick="btnLista"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listar Grupos"
+        android:onClick="btnGrupo"/>
 </LinearLayout>

@@ -16,14 +16,16 @@ import java.util.List;
 public class Adapter extends BaseAdapter {
 
     private Context c;
-//    private Cursor registros;
+    //    private Cursor registros;
     private List<JSONObject> lista;
     LayoutInflater inflater;
+    int tipo;
 
-    public Adapter(Context c, List<JSONObject> lista){
+    public Adapter(Context c, List<JSONObject> lista, int tipo) {
         this.c = c;
         this.lista = lista;
         this.inflater = (LayoutInflater) c.getSystemService(c.LAYOUT_INFLATER_SERVICE);
+        this.tipo = tipo;
     }
 
 
@@ -40,11 +42,20 @@ public class Adapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        try {
-            return lista.get(i).getInt("idusuario");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return 0;
+        if (tipo == 2) {
+            try {
+                return lista.get(i).getInt("idgrupo");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        } else {
+            try {
+                return lista.get(i).getInt("idusuario");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return 0;
+            }
         }
     }
 
@@ -64,22 +75,35 @@ public class Adapter extends BaseAdapter {
 
         TextView tvNome = (TextView) v.findViewById(R.id.tvNome);
         TextView tvExc = (TextView) v.findViewById(R.id.tvExc);
+        TextView tvTitulo = (TextView) v.findViewById(R.id.tvTitulo);
 
         String nome = "teste";
         String dados = "teste2";
-        try {
-            nome = lista.get(i).getString("nome");
-            dados = lista.get(i).getString("dadosacelerometro");
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        tvTitulo.setText(String.valueOf(i) + "° Lugar");
+        if (tipo == 2) {
+            try {
+                nome = lista.get(i).getString("descricao");
+                dados = lista.get(i).getString("dadosacelerometro");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            tvNome.setText(nome);
+            tvExc.setText(dados);
+        } else {
+
+            try {
+                nome = lista.get(i).getString("nome");
+//                dados = lista.get(i).getString("dadosacelerometro");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            tvNome.setText(nome);
+            tvExc.setText(dados);
         }
-
-        tvNome.setText(nome);
-        tvExc.setText(dados);
-
         return v;
     }
-
 
 }
 

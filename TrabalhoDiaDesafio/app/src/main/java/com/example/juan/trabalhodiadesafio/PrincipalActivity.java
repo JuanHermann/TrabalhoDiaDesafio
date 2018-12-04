@@ -54,4 +54,7 @@ public class PrincipalActivity extends AppCompatActivity {
         startActivity(new Intent(this, ListarActivity.class));
     }
 
+    public void btnGrupo(View view) {
+        startActivity(new Intent(this, ListarGruposActivity.class));
+    }
 }

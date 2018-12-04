@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.juan.trabalhodiadesafio.model.Usuario;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -41,27 +42,24 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginButton loginButton;
     private CallbackManager callbackManager;
-    private LoginResult resultadoLogin;
-    private TextView txtDisplay;
-    private JSONObject dados;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        dados = new JSONObject();
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -71,8 +69,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         executeGraphRequest(loginResult.getAccessToken().getUserId());
 
-                        //login();
-                        //Toast.makeText(getApplicationContext(), "Usuario Logado com Sucesso ", Toast.LENGTH_LONG).show();
+                        login();
+                        Toast.makeText(getApplicationContext(), "Usuario Logado com Sucesso ", Toast.LENGTH_LONG).show();
                     }
 
 
@@ -99,38 +97,34 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() {
         Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+        intent.putExtra("usuario", usuario);
         startActivity(intent);
     }
 
     private void executeGraphRequest(final String userId) {
+        usuario = new Usuario();
         Toast.makeText(getApplicationContext(), "dados ", Toast.LENGTH_LONG).show();
         GraphRequest request = new GraphRequest(AccessToken.getCurrentAccessToken(), userId, null, HttpMethod.GET, new GraphRequest.Callback() {
             @Override
             public void onCompleted(GraphResponse response) {
-                Log.i("FACEBOOK", response.getJSONObject().toString());
-                dados = response.getJSONObject();
-                Log.i("FACEBOOK", Profile.getCurrentProfile().toString());
+
+                usuario = new Gson().fromJson(response.getJSONObject().toString(), Usuario.class);
+                mostrar();
+                Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                intent.putExtra("usuario", usuario);
+                startActivity(intent);
             }
         });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id, name, email, gender, birthday");
-        request.setParameters(parameters);
         request.executeAsync();
 
-        mostrar();
+
     }
 
     private void mostrar() {
-
-            System.out.println("=== // === // ===");
-            System.out.println(dados.toString());
-//            try {
-//                System.out.println(dados.getString("name"));
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-
+        System.out.println("=== // === // ===");
+        System.out.println("ID = " + usuario.getId());
+        System.out.println("Nome = " + usuario.getName());
+        System.out.println("=== // === // ===");
     }
 
     private void alertaErro() {
@@ -151,21 +145,5 @@ public class LoginActivity extends AppCompatActivity {
     private void alertaCancel() {
         Toast.makeText(this, "Login com o Facebook Cancelado", Toast.LENGTH_SHORT).show();
     }
-
-    private void alertaSucesso(LoginResult loginResult) {
-        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
-        alerta.setTitle("Sucesso");
-        alerta.setMessage("Login Realizado com Sucesso");
-        alerta.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        alerta.show();
-    }
-
 
 }

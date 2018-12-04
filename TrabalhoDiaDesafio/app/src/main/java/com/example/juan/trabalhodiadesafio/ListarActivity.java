@@ -30,14 +30,11 @@ public class ListarActivity extends AppCompatActivity {
 
         lvRegistros = (ListView) findViewById(R.id.lvRegistros);
 
-        String urlUser = "http://192.168.2.14:8081/api/infousuario/2"; //mudar id user
-        String urlAll = "http://192.168.2.14:8081/api/infousuarios"; //IP!!
+        String urlUser = "http://192.168.2.14:8081/api/infousuario/2"; //URL find by id
+        String urlAll = "http://192.168.2.14:8081/api/infousuarios"; //URL listar todos
 
         ListarUsuarios(urlAll);
 
-//        Adapter adapter = new Adapter(this, lista);
-//
-//        lvRegistros.setAdapter(adapter);
 
     }
 
@@ -45,18 +42,17 @@ public class ListarActivity extends AppCompatActivity {
 
     public void ListarUsuarios(String url){
         //Inicio chamar servidor
+        RequestQueue requestQueue = Volley.newRequestQueue(this); //parada pra chamar banco
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JsonArrayRequest objectRequest = new JsonArrayRequest(
-                Request.Method.GET, url, null,
+        JsonArrayRequest objectRequest = new JsonArrayRequest( //metodo pra pega a lista do banco e salvar em array json
+                Request.Method.GET, url, null, //passa o metodo (GET), a url do servidor, um jsonRequest(null), o listener (response) e o listener error
                 new com.android.volley.Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.e("rest response", response.toString()); //response é o conteudo
                         int i = 0;
-                        lista = new ArrayList<>(response.length());
-                        while (i < response.length()){
+                        lista = new ArrayList<>(response.length()); //dentro do response eu inicializo uma lista com o mesmo tamanho do response
+                        while (i < response.length()){ // adiciono todos os registros do banco na lista em JsonObject
                             try {
                                 lista.add(i, response.getJSONObject(i));
                             } catch (JSONException e) {
@@ -64,7 +60,7 @@ public class ListarActivity extends AppCompatActivity {
                             }
                             i++;
                         }
-                        printaTudo();//chama adapter
+                        printaTudo();//chamo o metodo pra printar ver se funcionou e ja envia para o adapter
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {
@@ -75,13 +71,15 @@ public class ListarActivity extends AppCompatActivity {
                 }
         );
 
-        requestQueue.add(objectRequest);
+        /*VVVVVV COMECA COM ESSE REQUEST QUEUE VVVVVVV
+        * */
+        requestQueue.add(objectRequest); //chama o metodo de cima
 
     }
 
     public void printaTudo(){
         for (int x = 0; x < lista.size(); x++){
-            System.out.println("=== // === // ===");
+            System.out.println("=== // === // ==="); //printa ver se funcionou
             System.out.println(lista.get(x).toString());
             try {
                 System.out.println(lista.get(x).getString("nome"));
@@ -90,7 +88,7 @@ public class ListarActivity extends AppCompatActivity {
             }
         }
         //chama adapter
-        Adapter adapter = new Adapter(this, lista);
+        Adapter adapter = new Adapter(this, lista); //inicia adapter
 
         lvRegistros.setAdapter(adapter);
     }

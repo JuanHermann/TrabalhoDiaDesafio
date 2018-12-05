@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.androidannotations.annotations.EActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+@EActivity(R.layout.activity_listar)
 public class ListarActivity extends AppCompatActivity {
 
     private ListView lvRegistros;
@@ -26,7 +28,6 @@ public class ListarActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listar);
 
         lvRegistros = (ListView) findViewById(R.id.lvRegistros);
 

@@ -80,7 +80,7 @@ public class Adapter extends BaseAdapter {
         String nome = "teste";
         String dados = "teste2";
 
-        tvTitulo.setText(String.valueOf(i) + "° Lugar");
+        tvTitulo.setText(String.valueOf(i+1) + "° Lugar");
         if (tipo == 2) {
             try {
                 nome = lista.get(i).getString("descricao");

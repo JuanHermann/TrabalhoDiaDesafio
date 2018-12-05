@@ -33,28 +33,24 @@ public class ListarActivity extends AppCompatActivity {
         lvRegistros = (ListView) findViewById(R.id.lvRegistros);
 
         String urlUser = "http://192.168.2.14:8081/api/infousuario/2"; //URL find by id
-        String urlAll = "http://192.168.2.14:8081/api/infousuarios"; //URL listar todos
+        String urlAll = "http://172.30.14.191:8081/api/infousuarios"; //URL listar todos
 
         ListarUsuarios(urlAll);
 
-
     }
-
-
-
     public void ListarUsuarios(String url){
         //Inicio chamar servidor
-        RequestQueue requestQueue = Volley.newRequestQueue(this); //parada pra chamar banco
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        JsonArrayRequest objectRequest = new JsonArrayRequest( //metodo pra pega a lista do banco e salvar em array json
-                Request.Method.GET, url, null, //passa o metodo (GET), a url do servidor, um jsonRequest(null), o listener (response) e o listener error
+        JsonArrayRequest objectRequest = new JsonArrayRequest(
+                Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Log.e("rest response", response.toString()); //response é o conteudo
+                        Log.e("rest response", response.toString());
                         int i = 0;
-                        lista = new ArrayList<>(response.length()); //dentro do response eu inicializo uma lista com o mesmo tamanho do response
-                        while (i < response.length()){ // adiciono todos os registros do banco na lista em JsonObject
+                        lista = new ArrayList<>(response.length());
+                        while (i < response.length()){
                             try {
                                 lista.add(i, response.getJSONObject(i));
                             } catch (JSONException e) {
@@ -62,7 +58,7 @@ public class ListarActivity extends AppCompatActivity {
                             }
                             i++;
                         }
-                        printaTudo();//chamo o metodo pra printar ver se funcionou e ja envia para o adapter
+                        printaTudo();
                     }
                 },
                 new Response.ErrorListener() {
@@ -73,11 +69,9 @@ public class ListarActivity extends AppCompatActivity {
                 }
         );
 
-        /*VVVVVV COMECA COM ESSE REQUEST QUEUE VVVVVVV
-        * */
-
-        objectRequest.setRetryPolicy(new DefaultRetryPolicy( 5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(objectRequest); //chama o metodo de cima
+        System.out.println("teste222");
+//        objectRequest.setRetryPolicy(new DefaultRetryPolicy( 5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
     }
 

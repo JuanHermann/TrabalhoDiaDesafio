@@ -42,8 +42,8 @@ public class ListarActivity extends AppCompatActivity {
 
     @AfterViews
     void init() {
-        String urlUser = "http://192.168.2.14:8081/api/infousuario/2"; //URL find by id
-        String urlAll = "http://192.168.2.14:8081/api/infousuarios"; //URL listar todos
+        String urlUser = "http://172.30.2.200:8081/api/infousuario/2"; //URL find by id
+        String urlAll = "http://172.30.2.200:8081/api/infousuarios"; //URL listar todos
 
         ListarUsuarios(urlAll);
     }

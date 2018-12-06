@@ -39,6 +39,20 @@
         <item name="android:padding">5dp</item>
     </style>
 
+    <style name="edit">
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:focusable">true</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/back_black</item>
+    </style>
+
     <style name="editDisable">
         <item name="android:lines">1</item>
         <item name="android:maxLines">1</item>

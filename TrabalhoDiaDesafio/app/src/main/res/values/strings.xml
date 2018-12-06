@@ -21,5 +21,9 @@
     <string name="nivel_de_atividade">Nível de atividade</string>
     <string name="grupos">Grupos</string>
     <string name="criar_grupo">Criar grupo</string>
+    <string name="lbl_nome">Nome:</string>
+    <string name="salvar">Salvar</string>
+    <string name="lbl_descricao">Descrição</string>
+    <string name="criar_grupo">Criar grupo</string>
 
 </resources>

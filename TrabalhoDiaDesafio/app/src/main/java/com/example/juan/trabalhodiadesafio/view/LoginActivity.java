@@ -42,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         executeGraphRequest(loginResult.getAccessToken().getUserId());
-
-                        login();
                         Toast.makeText(getApplicationContext(), "Usuario Logado com Sucesso ", Toast.LENGTH_LONG).show();
                     }
 
@@ -67,12 +65,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void login() {
-        Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
-        intent.putExtra("usuario", usuario);
-        startActivity(intent);
     }
 
     private void executeGraphRequest(final String userId) {

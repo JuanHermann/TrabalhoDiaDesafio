@@ -77,7 +77,7 @@ public class PrincipalActivity extends AppCompatActivity {
             call.execute().body();
             Toast.makeText(this, "Registro salvo com sucesso!",Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex.toString());
             Toast.makeText(this, "Falha ao salvar registro!",Toast.LENGTH_SHORT).show();
         }
     }

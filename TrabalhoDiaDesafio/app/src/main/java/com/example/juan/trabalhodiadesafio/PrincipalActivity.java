@@ -12,6 +12,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.NetworkError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.juan.trabalhodiadesafio.utils.GPSUtil;
 import com.example.juan.trabalhodiadesafio.utils.SensorUtil;
 import com.facebook.AccessToken;
@@ -22,10 +29,14 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
     @EActivity
@@ -90,6 +101,8 @@ public class PrincipalActivity extends AppCompatActivity {
     private Double latitude;
 
     private Double longitude;
+
+    private Float dadosAcelerometro;
 
     private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
@@ -162,7 +175,8 @@ public class PrincipalActivity extends AppCompatActivity {
     @Click(R.id.btnAtualizar)
     void clickAtualizar() {
         btnAtualizar.setEnabled(false);
-        edtTaxa.setText(String.valueOf(sensorUtil.getVariacao()));
+        dadosAcelerometro = sensorUtil.getVariacao();
+        edtTaxa.setText(String.valueOf(dadosAcelerometro));
         btnAtualizar.setEnabled(true);
     }
 
@@ -210,5 +224,59 @@ public class PrincipalActivity extends AppCompatActivity {
     void clickLista() {
         startActivity(new Intent(this, ListarActivity_.class));
     }
+
+//    private void enviarDados() {
+//        RequestQueue queue = SingletonRequestQueue.getInstance(this).getRequestQueue();
+//
+//        String url = "http://192.168.2.14:8081";
+//
+//        VolleyLog.DEBUG = true;
+//        String uri = url + "/api/infousuario";
+//
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            jsonObject.put("idusuario", idUsuario);
+////            jsonObject.put("nome", "nome"); // Pegar nome do usuário;
+//            jsonObject.put("datainclusao", horarioFim);
+//            jsonObject.put("latitude", latitude);
+//            jsonObject.put("longitude", longitude);
+//            jsonObject.put("dadosacelerometro", dadosAcelerometro);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Response.ErrorListener errorListener = new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                if (error instanceof NetworkError) {
+//                    Toast.makeText(getApplicationContext(), "Não há conexão com a internet", Toast.LENGTH_LONG).show();
+//                } else {
+//                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        };
+//
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(uri, jsonObject, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                VolleyLog.wtf(response.toString(), "utf-8");
+//                Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+//
+//            }
+//        }, errorListener) {
+//
+//            @Override
+//            public int getMethod() {
+//                return Method.POST;
+//            }
+//
+//            @Override
+//            public Priority getPriority() {
+//                return Priority.NORMAL;
+//            }
+//        };
+//
+//        queue.add(jsonObjectRequest);
+//    }
 
 }

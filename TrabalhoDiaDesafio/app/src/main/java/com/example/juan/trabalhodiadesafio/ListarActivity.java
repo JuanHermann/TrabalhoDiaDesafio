@@ -43,7 +43,7 @@ public class ListarActivity extends AppCompatActivity {
 
     public void ListarUsuarios(String url){
         //Inicio chamar servidor
-        RequestQueue requestQueue = Volley.newRequestQueue(this); //parada pra chamar banco
+        RequestQueue requestQueue = SingletonRequestQueue.getInstance(this).getRequestQueue(); //parada pra chamar banco
 
         JsonArrayRequest objectRequest = new JsonArrayRequest( //metodo pra pega a lista do banco e salvar em array json
                 Request.Method.GET, url, null, //passa o metodo (GET), a url do servidor, um jsonRequest(null), o listener (response) e o listener error
@@ -75,7 +75,6 @@ public class ListarActivity extends AppCompatActivity {
         /*VVVVVV COMECA COM ESSE REQUEST QUEUE VVVVVVV
         * */
         requestQueue.add(objectRequest); //chama o metodo de cima
-
     }
 
     public void printaTudo(){

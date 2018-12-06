@@ -11,7 +11,6 @@ public class SensorUtil implements SensorEventListener {
     private final Context context;
 
     private SensorManager sensorManager;
-    private Sensor acelerometro;
 
     private float x;
     private float y;
@@ -29,22 +28,16 @@ public class SensorUtil implements SensorEventListener {
 
     private void init() {
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        Sensor acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
         sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
 
         zerarVariacao();
     }
 
-    public void pausarMonitoramento() {
-        sensorManager.unregisterListener(this);
-    }
-
-    public void retomarMonitoramento() {
-        sensorManager.registerListener(this, acelerometro, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
     public void encerrarMonitoramento() {
-        pausarMonitoramento();
+        sensorManager.unregisterListener(this);
         zerarVariacao();
     }
 

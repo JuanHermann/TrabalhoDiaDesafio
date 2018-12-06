@@ -7,5 +7,6 @@
     <color name="grey200">#EEEEEE</color>
     <color name="grey300">#E0E0E0</color>
 
+    <color name="black">#000000</color>
     <color name="black_transparent">#33000000</color>
 </resources>

@@ -31,5 +31,6 @@ public interface InfoUsuarioService {
 
     @DELETE("infousuario/{id}")
     Call<Void> delete(@Path("id") Long id);
+
 }
 

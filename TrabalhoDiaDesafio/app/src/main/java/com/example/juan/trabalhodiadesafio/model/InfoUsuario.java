@@ -12,7 +12,8 @@ public class InfoUsuario {
     private String longitude;
     private String dadosacelerometro;
 
-    public InfoUsuario(){}
+    public InfoUsuario() {
+    }
 
     public Long getId() {
         return id;

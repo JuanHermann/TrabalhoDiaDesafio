@@ -90,37 +90,16 @@
             style="@style/btnLargo"
             android:text="@string/iniciar_monitoramento" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btnPausarMonit"
-                style="@style/btnLargo"
-                android:layout_weight="1"
-                android:text="@string/pausar"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btnRetomarMonit"
-                style="@style/btnLargo"
-                android:layout_weight="1"
-                android:text="@string/retomar"
-                android:visibility="gone" />
-
-            <Button
-                android:id="@+id/btnEncerrarMonit"
-                style="@style/btnLargo"
-                android:layout_weight="1"
-                android:text="@string/encerrar"
-                android:visibility="gone" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnEncerrarMonit"
+            style="@style/btnLargo"
+            android:text="@string/encerrar"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnLista"
             style="@style/btnLargo"
-            android:text="@string/lista" />
+            android:text="@string/ranking" />
     </LinearLayout>
 
 </LinearLayout>

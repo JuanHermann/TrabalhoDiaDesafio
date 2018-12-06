@@ -16,5 +16,10 @@
     <string name="retomar">Retomar</string>
     <string name="lbl_inicio">Início:</string>
     <string name="lbl_fim">Fim:</string>
+    <string name="ranking">Ranking</string>
+    <string name="nome">Nome</string>
+    <string name="nivel_de_atividade">Nível de atividade</string>
+    <string name="grupos">Grupos</string>
+    <string name="criar_grupo">Criar grupo</string>
 
 </resources>

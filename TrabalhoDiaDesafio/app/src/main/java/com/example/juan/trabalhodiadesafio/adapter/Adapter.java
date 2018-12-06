@@ -16,19 +16,14 @@ import java.util.List;
 
 public class Adapter extends BaseAdapter {
 
-    private Context c;
-//    private Cursor registros;
+    private LayoutInflater inflater;
     private List<JSONObject> lista;
-    LayoutInflater inflater;
 
-    public Adapter(Context c, List<JSONObject> lista){
-        this.c = c;
+    public Adapter(Context context, List<JSONObject> lista) {
+        this.inflater = LayoutInflater.from(context);
         this.lista = lista;
-        this.inflater = (LayoutInflater) c.getSystemService(c.LAYOUT_INFLATER_SERVICE);
     }
 
-
-    //Adapter metodos
     @Override
     public int getCount() {
         return lista.size();
@@ -49,22 +44,21 @@ public class Adapter extends BaseAdapter {
         }
     }
 
-    public String getItemNome(int i) {
-        try {
-            return lista.get(i).getString("nome");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        ViewHolder holder;
 
-        View v = inflater.inflate(R.layout.elemento_listar, null);
+        if (view == null) {
+            view = inflater.inflate(R.layout.elemento_listar, null);
+            holder = new ViewHolder();
 
-        TextView tvNome = (TextView) v.findViewById(R.id.tvNome);
-        TextView tvExc = (TextView) v.findViewById(R.id.tvExc);
+            holder.nome = view.findViewById(R.id.textItem1);
+            holder.nivelAtividade = view.findViewById(R.id.textItem2);
+
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
 
         String nome = "teste";
         String dados = "teste2";
@@ -76,12 +70,16 @@ public class Adapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        tvNome.setText(nome);
-        tvExc.setText(dados);
+        holder.nome.setText(nome);
+        holder.nivelAtividade.setText(dados);
 
-        return v;
+        return view;
     }
 
+    private static class ViewHolder {
+        private TextView nome;
+        private TextView nivelAtividade;
+    }
 
 }
 

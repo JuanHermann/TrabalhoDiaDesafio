@@ -2,6 +2,7 @@ package com.example.juan.trabalhodiadesafio.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 
@@ -76,13 +80,59 @@ public class LoginActivity extends AppCompatActivity {
 
                 usuario = new Gson().fromJson(response.getJSONObject().toString(), Usuario.class);
                 mostrar();
+                gravarDados();
                 Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
-                intent.putExtra("usuario", usuario);
                 startActivity(intent);
             }
         });
         request.executeAsync();
 
+
+    }
+
+    public void gravarDados() {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        try {
+            InfoUsuario infoUsuario = new InfoUsuario();
+
+            infoUsuario.setNome(usuario.getName());
+            infoUsuario.setIdUsuario(String.valueOf(usuario.getId()));
+            InfoUsuarioService infoUsuarioService = ServiceGenerator.createService(InfoUsuarioService.class);
+            Call<Void> call;
+            if (infoUsuario.getId() == null) {
+
+
+                if (verificaUsuario(infoUsuario.getIdUsuario())==null) {
+                    call = infoUsuarioService.insert(infoUsuario);
+                    call.execute().body();
+                }
+            }
+
+            Toast.makeText(this, "Registro salvo com sucesso!", Toast.LENGTH_SHORT).show();
+        } catch (Exception ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            ex.printStackTrace();
+        }
+    }
+
+    public InfoUsuario verificaUsuario(String usuarioId) {
+        InfoUsuarioService infoUsuarioService = ServiceGenerator.createService(InfoUsuarioService.class);
+        Call<List<InfoUsuario>> call;
+        call = infoUsuarioService.getAll();
+        try {
+            List<InfoUsuario> usuarios = call.execute().body();
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i).getIdUsuario().equals(usuarioId)) {
+                    return usuarios.get(i);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
 
     }
 

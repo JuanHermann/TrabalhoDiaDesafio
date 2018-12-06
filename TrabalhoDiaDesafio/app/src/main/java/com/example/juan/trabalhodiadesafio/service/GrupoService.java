@@ -15,21 +15,18 @@ import retrofit2.http.Path;
 
 public interface GrupoService {
 
-    @GET("infousuarios")
+    @GET("grupo")
     Call<List<Grupo>> getAll();
 
-    @GET("infousuario/{id}")
+    @GET("grupo/{id}")
     Call<Grupo> getOne(@Path("id") Long id);
 
-    @GET("infousuariofacebook/{id}")
-    Call<Grupo> getOneByIdFacebook(@Path("id") String id);
-
-    @POST("infousuario")
+    @POST("grupo")
     Call<Void> insert(@Body Grupo grupo);
 
-    @PUT("infousuario/")
+    @PUT("grupo/")
     Call<Void> update(@Body Grupo grupo);
 
-    @DELETE("infousuario/{id}")
+    @DELETE("grupo/{id}")
     Call<Void> delete(@Path("id") Long id);
 }

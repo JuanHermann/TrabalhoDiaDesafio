@@ -37,7 +37,7 @@ public class GruposActivity extends AppCompatActivity {
     private List<JSONObject> listaPessoa;
     private List<Integer> listaExercicio;
     private String urlPessoa;
-    private String ip = "192.168.2.14:8081";
+    private String ip = "172.30.2.200";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

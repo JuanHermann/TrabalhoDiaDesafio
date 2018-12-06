@@ -22,6 +22,7 @@ public class Adapter extends BaseAdapter {
     public Adapter(Context context, List<JSONObject> lista) {
         this.inflater = LayoutInflater.from(context);
         this.lista = lista;
+
     }
 
     @Override
@@ -37,7 +38,7 @@ public class Adapter extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         try {
-            return lista.get(i).getInt("idusuario");
+            return lista.get(i).getInt("id");
         } catch (JSONException e) {
             e.printStackTrace();
             return 0;

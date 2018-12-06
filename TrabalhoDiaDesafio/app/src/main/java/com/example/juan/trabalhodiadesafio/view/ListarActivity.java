@@ -33,7 +33,7 @@ public class ListarActivity extends AppCompatActivity {
     @ViewById
     ListView lvRegistros;
     private List<JSONObject> lista;
-    private String ip = "192.168.2.14:8081";
+    private String ip = "172.30.2.200";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -20,6 +20,9 @@ public interface InfoUsuarioService {
     @GET("infousuario/{id}")
     Call<InfoUsuario> getOne(@Path("id") Long id);
 
+    @GET("infousuariofacebook/{id}")
+    Call<InfoUsuario> getOneByIdFacebook(@Path("id") String id);
+
     @POST("infousuario")
     Call<Void> insert(@Body InfoUsuario infoUsuario);
 

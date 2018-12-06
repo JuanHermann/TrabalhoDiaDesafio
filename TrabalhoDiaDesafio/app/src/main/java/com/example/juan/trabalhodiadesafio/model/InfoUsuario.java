@@ -5,7 +5,7 @@ import java.util.Date;
 public class InfoUsuario {
 
     private Long id;
-    private Integer idUsuario;
+    private String idusuario;
     private String nome;
     private Date data;
     private String latitude;
@@ -22,12 +22,12 @@ public class InfoUsuario {
         this.id = id;
     }
 
-    public Integer getIdUsuario() {
-        return idUsuario;
+    public String getIdUsuario() {
+        return idusuario;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuario(String idUsuario) {
+        this.idusuario = idUsuario;
     }
 
     public String getNome() {

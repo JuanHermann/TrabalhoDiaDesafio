@@ -22,6 +22,7 @@
         <activity android:name=".view.LoginActivity_" />
         <activity android:name=".view.ListarActivity_" />
         <activity android:name=".view.GruposActivity_" />
+        <activity android:name=".view.CadastroGrupoActivity_" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

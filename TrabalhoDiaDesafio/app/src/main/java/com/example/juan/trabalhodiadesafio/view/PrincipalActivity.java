@@ -101,7 +101,7 @@ public class PrincipalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-//        verificaUsuarioLogado();
+        verificaUsuarioLogado();
 
         //Intent i = getIntent();
         //usuario = (Usuario)i.getSerializableExtra("usuario");

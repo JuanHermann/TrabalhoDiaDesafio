@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/layoutTela">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+
+        <TextView
+            style="@style/label"
+            android:text="@string/lbl_descricao"
+            android:labelFor="@id/edtDescricao" />
+
+        <EditText
+            android:id="@+id/edtDescricao"
+            style="@style/edit"
+            android:inputType="text" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSalvar"
+        style="@style/btnLargo"
+        android:text="@string/salvar" />
+
+</LinearLayout>

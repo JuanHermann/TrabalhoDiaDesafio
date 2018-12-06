@@ -36,18 +36,21 @@ public class GruposActivity extends AppCompatActivity {
     private List<JSONObject> lista;
     private List<JSONObject> listaPessoa;
     private List<Integer> listaExercicio;
-    private String urlPessoa = "http://192.168.2.14:8081/api/infousuarios";
+    private String urlPessoa;
+    private String ip = "192.168.2.14:8081";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.grupos));
+        urlPessoa = "http://"+ip+":8081/api/infousuarios";
     }
+
 
     @AfterViews
     void init() {
-        String urlUser = "http://192.168.2.14:8081/api/infousuario/2"; //URL find by id
-        String urlAll = "http://192.168.2.14:8081/api/grupos"; //URL listar todos
+        String urlUser = "http://"+ip+":8081/api/infousuario/2"; //URL find by id
+        String urlAll = "http://"+ip+":8081/api/grupos"; //URL listar todos
 
 
         ListarGrupo(urlAll);
@@ -129,15 +132,15 @@ public class GruposActivity extends AppCompatActivity {
         requestQueue.add(objectRequest); //chama o metodo de cima
     }
 
-    public void fazLista(){
-        listaExercicio  = new ArrayList<>(lista.size());
+    public void fazLista() {
+        listaExercicio = new ArrayList<>(lista.size());
         int x = 0;
-        for(int j = 0; j < lista.size(); j++){
+        for (int j = 0; j < lista.size(); j++) {
             listaExercicio.add(x, 0);
-            for (int i = 0; i < listaPessoa.size(); i++){
+            for (int i = 0; i < listaPessoa.size(); i++) {
                 try {
-                    if(listaPessoa.get(i).getInt("idgrupo") == lista.get(x).getInt("idgrupo")){
-                        listaExercicio.add(x, Integer.parseInt(listaPessoa.get(i).getString("dadosacelerometro"))+listaExercicio.get(x));
+                    if (listaPessoa.get(i).getInt("idgrupo") == lista.get(x).getInt("idgrupo")) {
+                        listaExercicio.add(x, Integer.parseInt(listaPessoa.get(i).getString("dadosacelerometro")) + listaExercicio.get(x));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -166,6 +169,13 @@ public class GruposActivity extends AppCompatActivity {
         AdapterGrupo adapter = new AdapterGrupo(this, lista, listaExercicio); //inicia adapter
 
         lvGrupos.setAdapter(adapter);
+
+
     }
 
+    @OptionsItem(R.id.mnuCriarGrupo)
+    void clickCriarGrupo() {
+        startActivity(new Intent(this, CadastroGrupoActivity_.class));
+
+    }
 }

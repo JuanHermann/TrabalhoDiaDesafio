@@ -26,8 +26,8 @@ public interface InfoUsuarioService {
     @POST("infousuario")
     Call<Void> insert(@Body InfoUsuario infoUsuario);
 
-    @PUT("infousuario/")
-    Call<Void> update(@Body InfoUsuario infoUsuario);
+    @PUT("infousuario/{id}")
+    Call<Void> update(@Path("id") String id, @Body InfoUsuario infoUsuario);
 
     @DELETE("infousuario/{id}")
     Call<Void> delete(@Path("id") Long id);

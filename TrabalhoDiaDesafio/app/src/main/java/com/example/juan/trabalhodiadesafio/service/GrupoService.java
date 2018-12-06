@@ -1,6 +1,8 @@
 package com.example.juan.trabalhodiadesafio.service;
 
 
+import com.example.juan.trabalhodiadesafio.model.Grupo;
+
 import java.util.List;
 
 import retrofit2.Call;

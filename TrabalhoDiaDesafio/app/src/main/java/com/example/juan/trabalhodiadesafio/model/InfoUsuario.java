@@ -7,7 +7,7 @@ public class InfoUsuario {
     private Long id;
     private String idusuario;
     private String nome;
-    private Date data;
+    private Date datainclusao;
     private String latitude;
     private String longitude;
     private String dadosacelerometro;
@@ -39,12 +39,12 @@ public class InfoUsuario {
         this.nome = nome;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDatainclusao() {
+        return datainclusao;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDatainclusao(Date datainclusao) {
+        this.datainclusao = datainclusao;
     }
 
     public String getLatitude() {

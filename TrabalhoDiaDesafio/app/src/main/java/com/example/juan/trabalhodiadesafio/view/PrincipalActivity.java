@@ -236,12 +236,12 @@ public class PrincipalActivity extends AppCompatActivity {
             Call<Void> call;
 
             if (user != null) {
-                user.setData(horarioFim);
-                user.setLatitude(String.valueOf(latitude));
+                user.setDatainclusao(horarioFim);
+                user.setLatitude(String.valueOf(latitude.toString()));
                 user.setLongitude(String.valueOf(longitude));
                 user.setDadosacelerometro(String.valueOf(dadosAcelerometro));
 
-                call = infoUsuarioService.update(user);
+                call = infoUsuarioService.update(user.getIdUsuario(),user);
 
                 call.execute().body();
 

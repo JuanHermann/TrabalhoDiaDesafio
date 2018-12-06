@@ -4,6 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
+//    private String ip = "172.30.2.200";
     private static final String API_BASE_URL = "http://172.30.2.200:8081/api/";
 //            "http://10.0.2.2:8084/posjava_rest/";
 

@@ -1,5 +1,20 @@
 <resources>
-    <string name="app_name">TrabalhoDiaDesafio</string>
-    <string name="facebook_app_id">488948848282221</string> <string name="fb_login_protocol_scheme">fb488948848282221</string>
+
+    <string name="app_name">Dia do desafio</string>
+
+    <string name="facebook_app_id">488948848282221</string>
+    <string name="fb_login_protocol_scheme">fb488948848282221</string>
+
+    <string name="logout">Logout</string>
+    <string name="lista">Lista</string>
+    <string name="iniciar_monitoramento">Iniciar monitoramento</string>
+    <string name="opcoes">Opções</string>
+    <string name="lbl_taxa_movimentacao">Taxa de movimentação:</string>
+    <string name="atualizar_taxa">Atualizar taxa</string>
+    <string name="pausar">Pausar</string>
+    <string name="encerrar">Encerrar</string>
+    <string name="retomar">Retomar</string>
+    <string name="lbl_inicio">Início:</string>
+    <string name="lbl_fim">Fim:</string>
 
 </resources>

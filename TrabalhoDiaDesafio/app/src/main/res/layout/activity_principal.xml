@@ -1,23 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".PrincipalActivity">
+    style="@style/layoutTela">
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layoutTaxa"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        android:onClick="btnLogoutOnClick"/>
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <Button
-        android:layout_width="wrap_content"
+        <TextView
+            style="@style/label"
+            android:labelFor="@id/edtTaxa"
+            android:text="@string/lbl_taxa_movimentacao" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <EditText
+                android:id="@+id/edtTaxa"
+                style="@style/editDisable"
+                android:layout_marginRight="5dp"
+                android:inputType="text" />
+
+            <ImageButton
+                android:id="@+id/btnAtualizar"
+                style="@style/imgBtn"
+                android:src="@drawable/ic_refresh_black_24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutHorario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/label"
+                    android:labelFor="@id/edtInicio"
+                    android:text="@string/lbl_inicio" />
+
+                <EditText
+                    android:id="@+id/edtInicio"
+                    style="@style/editDisable"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/label"
+                    android:labelFor="@id/edtFim"
+                    android:text="@string/lbl_fim" />
+
+                <EditText
+                    android:id="@+id/edtFim"
+                    style="@style/editDisable"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Listar Usuarios"
-        android:onClick="btnLista"/>
+        android:onClick="btnLista"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnIniciarMonit"
+            style="@style/btnLargo"
+            android:text="@string/iniciar_monitoramento" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnPausarMonit"
+                style="@style/btnLargo"
+                android:layout_weight="1"
+                android:text="@string/pausar"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnRetomarMonit"
+                style="@style/btnLargo"
+                android:layout_weight="1"
+                android:text="@string/retomar"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnEncerrarMonit"
+                style="@style/btnLargo"
+                android:layout_weight="1"
+                android:text="@string/encerrar"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnLista"
+            style="@style/btnLargo"
+            android:text="@string/lista" />
+    </LinearLayout>
+
 
     <Button
         android:layout_width="wrap_content"

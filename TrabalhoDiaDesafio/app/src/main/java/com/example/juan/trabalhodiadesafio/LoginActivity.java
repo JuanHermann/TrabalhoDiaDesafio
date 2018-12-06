@@ -43,11 +43,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.gson.JsonObject;
 
+import org.androidannotations.annotations.EActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
 
+
+@EActivity(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
 
     private LoginButton loginButton;
@@ -59,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
         dados = new JSONObject();
 

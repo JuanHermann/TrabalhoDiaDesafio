@@ -1,4 +1,4 @@
-package com.example.juan.trabalhodiadesafio;
+package com.example.juan.trabalhodiadesafio.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.juan.trabalhodiadesafio.R;
+import com.example.juan.trabalhodiadesafio.adapter.Adapter;
 
 import org.androidannotations.annotations.EActivity;
 import org.json.JSONArray;

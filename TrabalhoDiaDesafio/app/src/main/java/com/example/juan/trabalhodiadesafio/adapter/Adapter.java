@@ -1,4 +1,4 @@
-package com.example.juan.trabalhodiadesafio;
+package com.example.juan.trabalhodiadesafio.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.juan.trabalhodiadesafio.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

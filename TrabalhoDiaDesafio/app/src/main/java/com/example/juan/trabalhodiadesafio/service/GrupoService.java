@@ -15,7 +15,7 @@ import retrofit2.http.Path;
 
 public interface GrupoService {
 
-    @GET("grupo")
+    @GET("grupos")
     Call<List<Grupo>> getAll();
 
     @GET("grupo/{id}")

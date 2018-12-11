@@ -47,8 +47,10 @@ public class InfoUsuarioController {
 
         if (lista != null) {
             for (InfoUsuario usuario : lista) {
-                if (usuario.getIdgrupo().equals(idGrupo)) {
-                    listaByGrupo.add(usuario);
+                if(usuario.getIdgrupo() != null) {
+                    if (usuario.getIdgrupo().equals(idGrupo)) {
+                        listaByGrupo.add(usuario);
+                    }
                 }
             }
         }

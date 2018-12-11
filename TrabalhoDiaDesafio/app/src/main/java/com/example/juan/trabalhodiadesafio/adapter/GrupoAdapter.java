@@ -69,10 +69,16 @@ public class GrupoAdapter extends BaseAdapter {
             nome = lista.get(i).getDescricao();
 
             List<InfoUsuario> listaUsuarios = new InfoUsuarioController().getByGrupo(lista.get(i).getIdgrupo());
+            if(listaUsuarios == null){
+                media =0.0;
+                numDeMembros=0;
+            }else {
+                numDeMembros = listaUsuarios.size();
+                if(numDeMembros!=0) {
+                    media = calcularMedia(listaUsuarios);
+                }
 
-            media = calcularMedia(listaUsuarios);
-
-            numDeMembros = listaUsuarios.size();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

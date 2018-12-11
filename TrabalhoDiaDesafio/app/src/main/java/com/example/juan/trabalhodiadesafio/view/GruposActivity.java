@@ -25,6 +25,7 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_grupos)
@@ -40,7 +41,6 @@ public class GruposActivity extends AppCompatActivity {
 
     private InfoUsuario infoUsuario;
 
-    @OptionsMenuItem
     MenuItem mnuEntrar;
 
     @Override
@@ -54,7 +54,9 @@ public class GruposActivity extends AppCompatActivity {
         GrupoController grupoController = new GrupoController();
 
         List<Grupo> lista = grupoController.getAll();
-
+        if (lista == null) {
+            lista = new ArrayList<>();
+        }
         GrupoAdapter grupoAdapter = new GrupoAdapter(this, lista);
 
         lvGrupos.setAdapter(grupoAdapter);
@@ -73,6 +75,7 @@ public class GruposActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.context_menu_grupos, menu);
         super.onCreateContextMenu(menu, v, menuInfo);
+        mnuEntrar = findViewById(R.id.mnuEntrar);
     }
 
     @Override

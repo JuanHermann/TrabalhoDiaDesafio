@@ -1,7 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/lvGrupos"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</ListView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view"
+            style="@style/viewLineBlack" />
+
+        <LinearLayout style="@style/layoutTableHeader">
+
+            <TextView
+                style="@style/textTableTitle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/grupo" />
+
+            <View style="@style/viewVertical" />
+
+            <TextView
+                style="@style/textTableTitle"
+                android:layout_width="100dp"
+                android:text="@string/media_de_atividade" />
+
+            <View style="@style/viewVertical" />
+
+            <TextView
+                style="@style/textTableTitle"
+                android:layout_width="90dp"
+                android:text="@string/num_de_membros" />
+
+        </LinearLayout>
+
+        <View style="@style/viewLineBlack" />
+
+        <ListView
+            android:id="@+id/lvGrupos"
+            style="@style/listView" />
+
+        <View style="@style/viewLineBlack" />
+
+    </LinearLayout>
+
+</ScrollView>
+

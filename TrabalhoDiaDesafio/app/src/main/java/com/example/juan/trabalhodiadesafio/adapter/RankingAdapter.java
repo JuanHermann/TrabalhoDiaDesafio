@@ -8,22 +8,18 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.juan.trabalhodiadesafio.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.juan.trabalhodiadesafio.model.InfoUsuario;
 
 import java.util.List;
 
-public class AdapterGrupo extends BaseAdapter {
+public class RankingAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
-    private List<JSONObject> lista;
-    private List<Integer> exercicio;
+    private List<InfoUsuario> lista;
 
-    public AdapterGrupo(Context context, List<JSONObject> lista, List<Integer> exercicio) {
+    public RankingAdapter(Context context, List<InfoUsuario> lista) {
         this.inflater = LayoutInflater.from(context);
         this.lista = lista;
-        this.exercicio = exercicio;
     }
 
     @Override
@@ -39,8 +35,8 @@ public class AdapterGrupo extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         try {
-            return lista.get(i).getInt("idgrupo");
-        } catch (JSONException e) {
+            return lista.get(i).getIdgrupo();
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
@@ -51,29 +47,28 @@ public class AdapterGrupo extends BaseAdapter {
         ViewHolder holder;
 
         if (view == null) {
-            view = inflater.inflate(R.layout.elemento_listar, null);
-            holder = new AdapterGrupo.ViewHolder();
+            view = inflater.inflate(R.layout.list_item_ranking, null);
+            holder = new ViewHolder();
 
             holder.nome = view.findViewById(R.id.textItem1);
             holder.nivelAtividade = view.findViewById(R.id.textItem2);
 
             view.setTag(holder);
         } else {
-            holder = (AdapterGrupo.ViewHolder) view.getTag();
+            holder = (ViewHolder) view.getTag();
         }
 
-        String descricao = "teste";
-        String dados = "teste2";
+        String nome = "";
+        String dados = "";
 
         try {
-            descricao = lista.get(i).getString("descricao");
-            dados = exercicio.get(i).toString();
-//            dados = lista.get(i).getString("dadosacelerometro");
-        } catch (JSONException e) {
+            nome = lista.get(i).getNome();
+            dados = lista.get(i).getDadosacelerometro();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        holder.nome.setText(descricao);
+        holder.nome.setText(nome);
         holder.nivelAtividade.setText(dados);
 
         return view;
@@ -85,3 +80,33 @@ public class AdapterGrupo extends BaseAdapter {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

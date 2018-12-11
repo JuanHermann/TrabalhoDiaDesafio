@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.LoginActivity_" />
-        <activity android:name=".view.ListarActivity_" />
+        <activity android:name=".view.RankingActivity_" />
         <activity android:name=".view.GruposActivity_" />
         <activity android:name=".view.CadastroGrupoActivity_" />
 

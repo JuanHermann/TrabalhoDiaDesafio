@@ -23,6 +23,17 @@
     <string name="criar_grupo">Criar grupo</string>
     <string name="lbl_nome">Nome:</string>
     <string name="salvar">Salvar</string>
-    <string name="lbl_descricao">Descrição</string>
+    <string name="lbl_descricao">Descrição:</string>
+    <string name="entrar_no_grupo">Entrar no grupo</string>
+    <string name="ver_ranking">Ver ranking</string>
+    <string name="sair_do_grupo">Sair do grupo</string>
+    <string name="grupo">Grupo</string>
+    <string name="num_de_membros">Nº de membros</string>
+    <string name="err_usuario_not_found">Usuário não encontrado.</string>
+    <string name="media_de_atividade">Média de atividade</string>
+    <string name="campo_obrigatorio_descricao">O campo DESCRIÇÃO é de preenchimento obrigatório.</string>
+    <string name="erro">Erro</string>
+    <string name="login_nao_realizado">Não foi possível realizar o login.</string>
+    <string name="login_cancelado">Login com o Facebook cancelado.</string>
 
 </resources>

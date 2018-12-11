@@ -29,4 +29,5 @@ public interface GrupoService {
 
     @DELETE("grupo/{id}")
     Call<Void> delete(@Path("id") Long id);
+
 }

@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/layoutItem">
+
+    <TextView
+        android:id="@+id/textItem1"
+        style="@style/textItem.Principal" />
+
+    <TextView
+        android:id="@+id/textItem2"
+        style="@style/textItem.Secundario"
+        android:layout_width="100dp" />
+
+    <TextView
+        android:id="@+id/textItem3"
+        style="@style/textItem.Secundario"
+        android:layout_width="90dp" />
+
+</LinearLayout>

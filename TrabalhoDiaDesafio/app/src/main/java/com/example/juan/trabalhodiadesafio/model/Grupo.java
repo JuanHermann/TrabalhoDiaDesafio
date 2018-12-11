@@ -1,6 +1,8 @@
 package com.example.juan.trabalhodiadesafio.model;
 
-public class Grupo {
+import java.io.Serializable;
+
+public class Grupo implements Serializable {
 
     private Long idgrupo;
     private String descricao;

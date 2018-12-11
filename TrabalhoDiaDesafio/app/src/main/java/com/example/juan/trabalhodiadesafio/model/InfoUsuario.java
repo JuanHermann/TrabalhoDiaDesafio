@@ -11,6 +11,7 @@ public class InfoUsuario {
     private String latitude;
     private String longitude;
     private String dadosacelerometro;
+    private Long idgrupo;
 
     public InfoUsuario() {
     }
@@ -21,14 +22,6 @@ public class InfoUsuario {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getIdUsuario() {
-        return idusuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idusuario = idUsuario;
     }
 
     public String getNome() {
@@ -71,6 +64,22 @@ public class InfoUsuario {
         this.dadosacelerometro = dadosacelerometro;
     }
 
+    public String getIdusuario() {
+        return idusuario;
+    }
+
+    public void setIdusuario(String idusuario) {
+        this.idusuario = idusuario;
+    }
+
+    public Long getIdgrupo() {
+        return idgrupo;
+    }
+
+    public void setIdgrupo(Long idgrupo) {
+        this.idgrupo = idgrupo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,4 +95,5 @@ public class InfoUsuario {
     public int hashCode() {
         return id.hashCode();
     }
+
 }

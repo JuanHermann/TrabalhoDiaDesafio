@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 gravarDados();
 
-                startActivity(new Intent(LoginActivity.this, PrincipalActivity_.class));
+
             }
         });
 
@@ -97,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        startActivity(new Intent(LoginActivity.this, PrincipalActivity_.class));
     }
 
     public InfoUsuario verificaUsuario(String usuarioId) {

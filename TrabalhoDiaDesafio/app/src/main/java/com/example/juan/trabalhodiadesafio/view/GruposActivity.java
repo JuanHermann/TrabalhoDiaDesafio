@@ -74,8 +74,18 @@ public class GruposActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.context_menu_grupos, menu);
+
+        if (grupo != null && infoUsuario != null) {
+            if (infoUsuario.getIdgrupo() != null) {
+                if (grupo.getIdgrupo().equals(infoUsuario.getIdgrupo())) {
+                    menu.findItem(R.id.mnuEntrar).setTitle(R.string.sair_do_grupo);
+                } else {
+                    menu.findItem(R.id.mnuEntrar).setTitle(R.string.entrar_no_grupo);
+                }
+            }
+        }
+
         super.onCreateContextMenu(menu, v, menuInfo);
-        mnuEntrar = findViewById(R.id.mnuEntrar);
     }
 
     @Override
@@ -96,13 +106,6 @@ public class GruposActivity extends AppCompatActivity {
     @ItemLongClick(R.id.lvGrupos)
     Boolean clickLista(Grupo grupoSelecionado) {
         grupo = grupoSelecionado;
-
-        if (grupo.getIdgrupo().equals(infoUsuario.getIdgrupo())) {
-            mnuEntrar.setTitle(R.string.sair_do_grupo);
-        } else {
-            mnuEntrar.setTitle(R.string.entrar_no_grupo);
-        }
-
         return false;
     }
 
@@ -153,6 +156,7 @@ public class GruposActivity extends AppCompatActivity {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
             ex.printStackTrace();
         }
+        lvGrupos.setAdapter(new GrupoAdapter(this, new GrupoController().getAll()));
     }
 
 }

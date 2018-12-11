@@ -84,11 +84,14 @@ public class InfoUsuarioController {
         call.execute().body();
     }
 
-    public void insert(InfoUsuario infoUsuario) {
+    public void insert(InfoUsuario infoUsuario) throws IOException {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+        Call<Void> call = infoUsuarioService.insert(infoUsuario);
+        call.execute().body();
     }
 
 }
